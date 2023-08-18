@@ -1,0 +1,41 @@
+class MyList<T>
+    {
+        const int DEFAULT_SIZE = 1;
+        T[] _data = new T[DEFAULT_SIZE];
+
+        public int Count = 0;
+        public int Capacity { get { return _data.Length; } }
+
+        //O(1)
+        public void Add(T item)
+        {
+            //예외 케이스, 이사 비용 무시 얘는 O(N)인데 예외로 두면 Add는 O(1)
+            if (Count >= Capacity)
+            {
+                T[] newArray = new T[Capacity * 2];
+                for (int i = 0; i < Capacity; i++)
+                {
+                    newArray[i] = _data[i];
+                }
+                _data = newArray;
+            }
+            _data[Count] = item;
+        }
+
+        //O(1)
+        public T this[int index] 
+        {
+            get {  return _data[index]; } 
+            set { _data[index] = value; }
+        }
+
+        //O(N)
+        public void RemoveAt(int index)
+        {
+            for (int i = 0; i < Count - 1; i++)
+            {
+                _data[i] = _data[i + 1];
+            }
+            _data[Count - 1] = default(T);
+            Count--;
+        }
