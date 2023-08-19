@@ -1,0 +1,61 @@
+//링크드리스트 클래스
+class Room<T>
+    {
+        public T Data ;
+        public Room<T> Next = null;
+        public Room<T> Prev = null;
+    }
+
+    class RoomList<T>
+    {
+        public Room<T> Head = null;
+        public Room<T> Tail = null;
+        public int Count = 0;
+    
+        public Room<T> AddLast(T data)
+        {
+            Room<T> newRoom = new Room<T>();
+            newRoom.Data = data;
+
+            // 아직 방이 없었으면, 새로 추가한 첫번재 방이 Head이다.
+            if (Head == null)
+            {
+                Head = newRoom;
+            }
+            //기존 Tail과 새로 추가된 방을 연결한다.
+            if(Tail != null)
+            {
+                Tail.Next = newRoom;
+                newRoom.Prev = Tail;
+            }
+
+            // 새로 추가된 방을 Tail로 설정한다.
+            Tail = newRoom;
+            Count++;
+            return newRoom;
+        }
+
+        public void Romove(Room<T> room)
+        {
+            // 기존의 Head의 다음 방을 첫번째 방으로 인정한다.
+            if(Head == room)
+            {
+                Head = Head.Next;
+            }
+            // 기존의 Tail의 이전 방을 마지막 방으로 인정한다.
+            if(Tail == room)
+            {
+                Tail = Tail.Prev;
+            }
+
+            if(room.Prev != null)
+            {
+                room.Prev.Next = room.Next;
+            }
+            if(room.Next != null)
+            {
+                room.Next.Prev = room.Prev;
+            }
+            Count--;
+        }
+    }
